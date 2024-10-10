@@ -1,0 +1,48 @@
+import universidad.*
+
+describe "early tests" {
+
+    const medicina = new Carrera()
+    const quimica = new Materia(carrera=medicina)
+    const biologia1 = new Materia(carrera=medicina)
+    const biologia2 = new Materia(carrera=medicina)
+    const anatomiaGeneral = new Materia(carrera=medicina)
+    const derecho = new Carrera()
+    const latin = new Materia(carrera=derecho)
+    const derechoRomano = new Materia(carrera=derecho)
+    const historiaDelDerechoArgentino = new Materia(carrera=derecho)
+    const derechoPenal1 = new Materia(carrera=derecho)
+    const derechoPenal2 = new Materia(carrera=derecho)
+    const programacion = new Carrera()
+    const progObjetos1 = new Materia(carrera=programacion)
+    const progObjetos2 = new Materia(carrera=programacion)
+    const progObjetos3 = new Materia(carrera=programacion)
+    const elementosDeProgramacion = new Materia(carrera=programacion)
+    const basesDeDatos = new Materia(carrera=programacion)
+    const matematica1 = new Materia(carrera=programacion)
+    const trabajoFinal = new Materia(carrera=programacion)
+    const roque = new Estudiante(carrerasCursando = #{programacion, medicina})
+
+    method initialize() {
+        medicina.materias([quimica, biologia1, biologia2, anatomiaGeneral])
+        derecho.materias([latin, derechoRomano, historiaDelDerechoArgentino, derechoPenal1, derechoPenal2])
+        programacion.materias([progObjetos1, progObjetos2, progObjetos3, elementosDeProgramacion, basesDeDatos,
+        matematica1, trabajoFinal])
+        roque.registrarMateriaAprobada(matematica1, 4)
+        roque.registrarMateriaAprobada(progObjetos1, 7)
+    }
+    
+   
+   test "1" {
+    assert.equals(#{programacion, medicina}, roque.carrerasCursando())
+    assert.equals(2, roque.materiasAprobadas().size())
+    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 3)})
+    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 11)})
+    assert.doesNotThrowException({roque.registrarMateriaAprobada(basesDeDatos, 4)})
+    assert.equals(3, roque.materiasAprobadas().size())
+    assert.that(roque.tieneAprobada(basesDeDatos))
+    assert.equals(5, roque.promedio())
+    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 5)}) //tira error porque ya la aprobó!
+   }
+
+}
