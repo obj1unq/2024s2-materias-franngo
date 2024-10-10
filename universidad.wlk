@@ -24,6 +24,12 @@ class Estudiante {
         return materiasAprobadas.any({instanciaAprobacion => instanciaAprobacion.materia()==materia})
     }
 
+    method todasLasMateriasDeSusCarreras() {
+        const materias = #{}
+        return carrerasCursando.forEach({carrera => materias.addAll(carrera.materias())})
+        return materias
+    }
+
 }
 
 class Materia {
@@ -67,5 +73,5 @@ class Aprobacion {
 }
 
 class Carrera{
-    var property materias = []
+    var property materias = #{}
 }

@@ -24,16 +24,16 @@ describe "early tests" {
     const roque = new Estudiante(carrerasCursando = #{programacion, medicina})
 
     method initialize() {
-        medicina.materias([quimica, biologia1, biologia2, anatomiaGeneral])
-        derecho.materias([latin, derechoRomano, historiaDelDerechoArgentino, derechoPenal1, derechoPenal2])
-        programacion.materias([progObjetos1, progObjetos2, progObjetos3, elementosDeProgramacion, basesDeDatos,
-        matematica1, trabajoFinal])
+        medicina.materias(#{quimica, biologia1, biologia2, anatomiaGeneral})
+        derecho.materias(#{latin, derechoRomano, historiaDelDerechoArgentino, derechoPenal1, derechoPenal2})
+        programacion.materias(#{progObjetos1, progObjetos2, progObjetos3, elementosDeProgramacion, basesDeDatos,
+        matematica1, trabajoFinal})
         roque.registrarMateriaAprobada(matematica1, 4)
         roque.registrarMateriaAprobada(progObjetos1, 7)
     }
     
    
-   test "1" {
+   test "funcionalidades de roque" {
     assert.equals(#{programacion, medicina}, roque.carrerasCursando())
     assert.equals(2, roque.materiasAprobadas().size())
     assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 3)})
@@ -43,6 +43,8 @@ describe "early tests" {
     assert.that(roque.tieneAprobada(basesDeDatos))
     assert.equals(5, roque.promedio())
     assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 5)}) //tira error porque ya la aprobó!
+    assert.equals(#{quimica, biologia1, biologia2, anatomiaGeneral, progObjetos1, progObjetos2, progObjetos3, 
+                    elementosDeProgramacion, basesDeDatos, matematica1, trabajoFinal}, roque.todasLasMateriasDeSusCarreras())
    }
 
 }
