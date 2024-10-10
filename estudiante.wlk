@@ -1,6 +1,6 @@
 import aprobacion.*
 import carrera.*
-import gestorAprobacion.*
+import gestores.*
 import materia.*
 
 class Estudiante {
@@ -43,7 +43,17 @@ class Estudiante {
     }
 
     method puedeInscribirseA(materia) {
+        return gestorInscripcion.puedeInscribirseA(self, materia)
+    }
 
+    method estaCursando(materia) {
+        return materiasCursando.any({materiaCurs => materiaCurs==materia})
+    }
+
+    //RECORDAR AÑADIR LA MATERIA A materiasCursando cuando se inscriba a un estudiante en una materia
+
+    method tieneAprobadosRequisitos(materia) {
+        return materia.prerrequisitos().all({prerreq => self.tieneAprobada(prerreq)}) //si no hay prerreq, devuelve true
     }
 
 }

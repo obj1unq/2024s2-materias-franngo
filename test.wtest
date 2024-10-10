@@ -1,54 +1,75 @@
 import aprobacion.*
 import carrera.*
 import estudiante.*
-import gestorAprobacion.*
+import gestores.*
 import materia.*
 
-describe "early tests" {
+describe "funcionalidades de la universidad" {
 
     const medicina = new Carrera()
     const quimica = new Materia(carrera=medicina)
     const biologia1 = new Materia(carrera=medicina)
-    const biologia2 = new Materia(carrera=medicina)
+    const biologia2 = new Materia(carrera=medicina, prerrequisitos=#{biologia1})
     const anatomiaGeneral = new Materia(carrera=medicina)
     const derecho = new Carrera()
     const latin = new Materia(carrera=derecho)
     const derechoRomano = new Materia(carrera=derecho)
     const historiaDelDerechoArgentino = new Materia(carrera=derecho)
     const derechoPenal1 = new Materia(carrera=derecho)
-    const derechoPenal2 = new Materia(carrera=derecho)
+    const derechoPenal2 = new Materia(carrera=derecho, prerrequisitos=#{derechoPenal1})
     const programacion = new Carrera()
     const progObjetos1 = new Materia(carrera=programacion)
-    const progObjetos2 = new Materia(carrera=programacion)
-    const progObjetos3 = new Materia(carrera=programacion)
+    const progObjetos2 = new Materia(carrera=programacion, prerrequisitos=#{progObjetos1, matematica1})
+    const progObjetos3 = new Materia(carrera=programacion, prerrequisitos=#{progObjetos2, basesDeDatos})
     const elementosDeProgramacion = new Materia(carrera=programacion)
     const basesDeDatos = new Materia(carrera=programacion)
     const matematica1 = new Materia(carrera=programacion)
-    const trabajoFinal = new Materia(carrera=programacion)
+    const programacionConcurrente = new Materia(carrera=programacion, prerrequisitos=#{progObjetos1, basesDeDatos})
+    const trabajoFinal = new Materia(carrera=programacion, prerrequisitos=#{progObjetos1, progObjetos2, progObjetos3, 
+    elementosDeProgramacion, basesDeDatos, matematica1, programacionConcurrente})
     const roque = new Estudiante(carrerasCursando = #{programacion, medicina})
+    const luisa = new Estudiante(carrerasCursando = #{programacion, medicina})
+    const romina = new Estudiante(carrerasCursando = #{programacion, medicina})
+    const alicia = new Estudiante(carrerasCursando = #{programacion, medicina})
+    const ana = new Estudiante(carrerasCursando = #{programacion, medicina})
 
     method initialize() {
         medicina.materias(#{quimica, biologia1, biologia2, anatomiaGeneral})
         derecho.materias(#{latin, derechoRomano, historiaDelDerechoArgentino, derechoPenal1, derechoPenal2})
         programacion.materias(#{progObjetos1, progObjetos2, progObjetos3, elementosDeProgramacion, basesDeDatos,
-        matematica1, trabajoFinal})
+        matematica1, programacionConcurrente, trabajoFinal})
+        roque.registrarMateriaAprobada(elementosDeProgramacion, 7)
         roque.registrarMateriaAprobada(matematica1, 4)
         roque.registrarMateriaAprobada(progObjetos1, 7)
+        roque.registrarMateriaAprobada(basesDeDatos, 6)
+        roque.registrarMateriaAprobada(quimica, 7)
+        roque.registrarMateriaAprobada(biologia1, 7)
     }
-    
    
-   test "funcionalidades de roque" {
+   test "funcionalidades básicas de roque y registrar aprobaciones" {
     assert.equals(#{programacion, medicina}, roque.carrerasCursando())
-    assert.equals(2, roque.materiasAprobadas().size())
-    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 3)})
-    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 11)})
-    assert.doesNotThrowException({roque.registrarMateriaAprobada(basesDeDatos, 4)})
-    assert.equals(3, roque.materiasAprobadas().size())
-    assert.that(roque.tieneAprobada(basesDeDatos))
-    assert.equals(5, roque.promedio())
-    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 5)}) //tira error porque ya la aprobó!
+    assert.equals(6, roque.materiasAprobadas().size())
+    assert.throwsException({roque.registrarMateriaAprobada(basesDeDatos, 5)}) //ya la tiene aprobada
+    assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 3)}) //no es nota aprobatoria
+    assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 11)}) //no es nota aprobatoria
+    assert.doesNotThrowException({roque.registrarMateriaAprobada(progObjetos2, 4)})
+    assert.equals(7, roque.materiasAprobadas().size())
+    assert.that(roque.tieneAprobada(progObjetos2))
+    assert.equals(6, roque.promedio())
+    assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 5)}) //tira error porque ya la aprobó!
     assert.equals(#{quimica, biologia1, biologia2, anatomiaGeneral, progObjetos1, progObjetos2, progObjetos3, 
-                    elementosDeProgramacion, basesDeDatos, matematica1, trabajoFinal}, roque.todasLasMateriasDeSusCarreras())
+                    elementosDeProgramacion, basesDeDatos, matematica1, programacionConcurrente, trabajoFinal},
+                    roque.todasLasMateriasDeSusCarreras())
+    assert.equals(7, roque.materiasAprobadas().size())
+   }
+
+   test "inscripciones" {
+    assert.notThat(roque.puedeInscribirseA(derechoRomano)) //no hay coincidencia con las carreras de roque
+    assert.notThat(roque.puedeInscribirseA(progObjetos1)) //ya la tiene aprobada
+    assert.notThat(roque.puedeInscribirseA(progObjetos3)) //no cumple los prerrequisitos
+    assert.that(roque.puedeInscribirseA(progObjetos2))
+    roque.registrarMateriaAprobada(progObjetos2, 8)
+    assert.that(roque.puedeInscribirseA(progObjetos3))
    }
 
 }

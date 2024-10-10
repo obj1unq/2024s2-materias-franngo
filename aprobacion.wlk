@@ -1,6 +1,6 @@
 import carrera.*
 import estudiante.*
-import gestorAprobacion.*
+import gestores.*
 import materia.*
 
 class Aprobacion {

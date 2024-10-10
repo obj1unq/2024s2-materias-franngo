@@ -6,7 +6,8 @@ import materia.*
 object gestorAprobacion {
 
     method registrarMateriaAprobada(estudiante, materia, nota) {
-        //materia.validarPrerrequisitos(estudiante, nota)
+        //validar que estaba inscrito en la materia?????
+        //validar existeCoincidenciaCarreraEstudiante(estudiante) y estudiante.tieneAprobadosRequisitos(materia)
         estudiante.validarNoEstaAprobada(materia)
         self.validarNotaAprobatoria(nota)
         const materiaAprobada = new Aprobacion (estudiante = estudiante, materia = materia, nota = nota)
@@ -24,7 +25,10 @@ object gestorAprobacion {
 
 object gestorInscripcion {
 
-    method lol() {}
+    method puedeInscribirseA(estudiante, materia) {
+        return materia.existeCoincidenciaCarreraEstudiante(estudiante) && !estudiante.tieneAprobada(materia) &&
+               !estudiante.estaCursando(materia) && estudiante.tieneAprobadosRequisitos(materia)
+    }
 
 }
 
