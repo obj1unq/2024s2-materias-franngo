@@ -1,6 +1,6 @@
 class Estudiante {
     const property carrerasCursando = #{}
-    const property materiasAprobadas = #{} //lista de instancias de Aprobacion
+    const property materiasAprobadas = #{} //set de instancias de Aprobacion
     var cantMateriasAprobadas = 0
 
     method registrarMateriaAprobada(materia, nota) {
@@ -26,7 +26,7 @@ class Estudiante {
 
     method todasLasMateriasDeSusCarreras() {
         const materias = #{}
-        return carrerasCursando.forEach({carrera => materias.addAll(carrera.materias())})
+        carrerasCursando.forEach({carrera => materias.addAll(carrera.materias())})
         return materias
     }
 

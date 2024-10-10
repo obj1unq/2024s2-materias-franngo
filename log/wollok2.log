@@ -318,3 +318,28 @@
 {"level":"info","message":"onRequest - completionItem/resolve","timestamp":"2024-10-10T00:47:18.674Z"}
 {"failures":[{"error":["wollok.lang.EvaluationError wrapping TypeScript Error: Could not resolve reference to actual or its a reference to void","  at test.\"early tests\".\"funcionalidades de roque\" [test.wtest:36]"],"test":"test.\"early tests\".\"funcionalidades de roque\""}],"level":"info","message":"🧪 Test runner executed on c:\\Users\\publico\\Documents\\2024s2-materias-franngo","result":{"failed":1,"ok":0},"timeElapsed":406,"timestamp":"2024-10-10T00:47:26.253Z"}
 {"failures":[{"error":["wollok.lang.EvaluationError wrapping TypeScript Error: Could not resolve reference to actual or its a reference to void","  at test.\"early tests\".\"funcionalidades de roque\" [test.wtest:36]"],"test":"test.\"early tests\".\"funcionalidades de roque\""}],"level":"info","message":"🧪 Test runner executed on c:\\Users\\publico\\Documents\\2024s2-materias-franngo","result":{"failed":1,"ok":0},"timeElapsed":396,"timestamp":"2024-10-10T00:48:01.757Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":305,"timestamp":"2024-10-10T03:30:44.876Z"}
+{"level":"info","message":"onRequest - WORKSPACE_URI:file:///home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","timestamp":"2024-10-10T03:30:44.897Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":184,"timestamp":"2024-10-10T03:30:45.084Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":135,"timestamp":"2024-10-10T03:30:45.219Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":150,"timestamp":"2024-10-10T03:30:45.373Z"}
+{"level":"info","message":"⌛ Validating test.wtest","timeElapsed":161,"timestamp":"2024-10-10T03:30:45.536Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":135,"timestamp":"2024-10-10T03:30:45.671Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":124,"timestamp":"2024-10-10T03:30:45.903Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":116,"timestamp":"2024-10-10T03:30:57.630Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":119,"timestamp":"2024-10-10T03:30:57.751Z"}
+{"failures":[{"error":["wollok.lang.EvaluationError wrapping TypeScript Error: Could not resolve reference to actual or its a reference to void","  at test.\"early tests\".\"funcionalidades de roque\" [test.wtest:36]"],"test":"test.\"early tests\".\"funcionalidades de roque\""}],"level":"info","message":"🧪 Test runner executed on /home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","result":{"failed":1,"ok":0},"timeElapsed":738,"timestamp":"2024-10-10T03:31:04.747Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":183,"timestamp":"2024-10-10T03:31:31.768Z"}
+{"level":"info","message":"⌛ Validating test.wtest","timeElapsed":153,"timestamp":"2024-10-10T03:31:31.924Z"}
+{"failures":[],"level":"info","message":"🧪 Test runner executed on /home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","result":{"failed":0,"ok":1},"timeElapsed":712,"timestamp":"2024-10-10T03:31:35.354Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":146,"timestamp":"2024-10-10T03:31:37.973Z"}
+{"level":"info","message":"⌛ Validating test.wtest","timeElapsed":166,"timestamp":"2024-10-10T03:31:38.142Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":124,"timestamp":"2024-10-10T03:32:41.179Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":111,"timestamp":"2024-10-10T03:32:41.291Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":146,"timestamp":"2024-10-10T03:32:41.455Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":145,"timestamp":"2024-10-10T03:32:41.603Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":145,"timestamp":"2024-10-10T03:32:41.839Z"}
+{"failures":[{"error":["wollok.lang.EvaluationError wrapping TypeScript Error: Could not resolve reference to actual or its a reference to void","  at test.\"early tests\".\"funcionalidades de roque\" [test.wtest:36]"],"test":"test.\"early tests\".\"funcionalidades de roque\""}],"level":"info","message":"🧪 Test runner executed on /home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","result":{"failed":1,"ok":0},"timeElapsed":769,"timestamp":"2024-10-10T03:35:02.124Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":107,"timestamp":"2024-10-10T03:37:39.658Z"}
+{"level":"info","message":"⌛ Validating universidad.wlk","timeElapsed":101,"timestamp":"2024-10-10T03:37:39.761Z"}
+{"failures":[],"level":"info","message":"🧪 Test runner executed on /home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","result":{"failed":0,"ok":1},"timeElapsed":744,"timestamp":"2024-10-10T03:37:48.984Z"}
