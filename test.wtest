@@ -1,4 +1,8 @@
-import universidad.*
+import aprobacion.*
+import carrera.*
+import estudiante.*
+import gestorAprobacion.*
+import materia.*
 
 describe "early tests" {
 
