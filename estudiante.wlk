@@ -14,7 +14,7 @@ class Estudiante {
 
     method validarNoEstaAprobada(materia) {
         if(self.tieneAprobada(materia)) {
-            self.error("No se puede registrar porque el estudiante ya aprobó la materia")
+            self.error("No se puede registrar la nota porque el estudiante ya aprobó la materia")
         }
     }
 
@@ -51,6 +51,12 @@ class Estudiante {
 
     method inscribirseA(materia) {
         gestorInscripcion.inscribirEstudianteEn(self, materia)
+    }
+
+    method validarEstaInscrito(materia) {
+        if(!self.estaCursando(materia)) {
+            self.error("No se puede registrar la nota porque el estudiante no está cursando esta materia")
+        }
     }
 
     /*

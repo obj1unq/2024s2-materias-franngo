@@ -11,16 +11,17 @@ object gestorAprobacion {
     //(que la esté cursando implica que existeCoincidenciaCarreraEstudiante() y tieneAprobadosRequisitos() se cumplen, por lo que no
     //se vuelve a validar eso)
     method registrarMateriaAprobada(estudiante, materia, nota) {
-        //validar que estaba inscrito en la materia
-        estudiante.validarNoEstaAprobada(materia)
+        estudiante.validarEstaInscrito(materia)
+        estudiante.validarNoEstaAprobada(materia) //esto ya se chequea al inscribirse, así que es medio redundante
         self.validarNotaAprobatoria(nota)
         const materiaAprobada = new Aprobacion (estudiante = estudiante, materia = materia, nota = nota)
         estudiante.materiasAprobadas().add(materiaAprobada)
+        estudiante.materiasCursando().remove(materia)
     }
 
     method validarNotaAprobatoria(nota) {
         if(nota<4 || nota>10) {
-            self.error("No se puede registrar porque la nota no es una nota aprobatoria")
+            self.error("No se puede registrar la nota porque la nota no es una nota aprobatoria")
         }
     }
 
