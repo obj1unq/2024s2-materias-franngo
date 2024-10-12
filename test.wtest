@@ -108,14 +108,35 @@ describe "funcionalidades de la universidad" {
     assert.equals(7, roque.materiasAprobadas().size())
    }
 
-   test "inscripciones 2" {
-
+   test "inscripciones 2 (correlatividades)" {
+    assert.that(roque.puedeInscribirseA(progObjetos2))
+    assert.that(roque.puedeInscribirseA(programacionConcurrente))
+    assert.that(roque.puedeInscribirseA(biologia2))
    }
 
-   /*
-* Roque puede inscribirse: en Programación, en Objetos 2 y Programación Concurrente; en Medicina, en Biología 2.
-* Si se inscriben, en este orden, Luisa, Romina, Alicia y Roque en Objetos 2, entonces las tres primeras quedan confirmadas, y Roque queda en lista de espera.
-* Si después se da de baja Romina en Objetos 2, entonces Roque pasa a tener la inscripción confirmada en esa materia.
-   */
+   test "inscripciones 3 (lista de espera)" { //recordar que el máximo de estudiantes para progObjetos2 es de 3 (los otros inscritos irán a lista de espera)
+    assert.that(luisa.puedeInscribirseA(progObjetos2)) 
+    luisa.inscribirseA(progObjetos2)
+    assert.that(romina.puedeInscribirseA(progObjetos2)) 
+    romina.inscribirseA(progObjetos2)
+    assert.that(alicia.puedeInscribirseA(progObjetos2)) 
+    alicia.inscribirseA(progObjetos2)
+    assert.that(roque.puedeInscribirseA(progObjetos2)) //roque no queda efectivamente inscrito y va a la lista de espera
+    roque.inscribirseA(progObjetos2)
+    assert.equals(3, progObjetos2.alumnosCursando().size())
+    assert.that(luisa.estaEfectivamenteCursando(progObjetos2))
+    assert.that(romina.estaEfectivamenteCursando(progObjetos2))
+    assert.that(alicia.estaEfectivamenteCursando(progObjetos2))
+    assert.equals([roque], progObjetos2.listaDeEspera())
+    assert.notThat(roque.estaEfectivamenteCursando(progObjetos2))
+    assert.that(roque.estaEnListaDeEspera(progObjetos2))
+    //SI SE DA DE BAJA ROMINA:
+    assert.doesNotThrowException({romina.darseDeBajaEn(progObjetos2)})
+    assert.notThat(romina.estaEfectivamenteCursando(progObjetos2))
+    assert.equals(3, progObjetos2.alumnosCursando().size()) //sigue siendo 3 porque ahora entró roque que estaba en lista de espera
+    assert.equals([], progObjetos2.listaDeEspera())
+    assert.that(roque.estaEfectivamenteCursando(progObjetos2))
+    assert.notThat(roque.estaEnListaDeEspera(progObjetos2))
+   }
 
 }

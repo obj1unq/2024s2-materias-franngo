@@ -7,8 +7,8 @@ class Materia {
     const property carrera = null
     const property prerrequisitos = #{}
     const property maximoEstudiantes = 2
-    const property alumnosCursando = []
-    const property listaDeEspera = [] //queue
+    const property alumnosCursando = #{}
+    const property listaDeEspera = [] //queue (es lista porque nos interesa el orden)
 
     method existeCoincidenciaCarreraEstudiante(estudiante) {
         return estudiante.carrerasCursando().any({carreraEst => carreraEst==carrera})
