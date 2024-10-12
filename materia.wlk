@@ -6,7 +6,7 @@ import gestores.*
 class Materia {
     const property carrera = null
     const property prerrequisitos = #{}
-    const property maximoEstudiantes = 3
+    const property maximoEstudiantes = 2
     const property alumnosCursando = []
     const property listaDeEspera = [] //queue
 

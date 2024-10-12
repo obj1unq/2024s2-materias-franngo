@@ -19,7 +19,7 @@ describe "funcionalidades de la universidad" {
     const derechoPenal2 = new Materia(carrera=derecho, prerrequisitos=#{derechoPenal1})
     const programacion = new Carrera()
     const progObjetos1 = new Materia(carrera=programacion)
-    const progObjetos2 = new Materia(carrera=programacion, prerrequisitos=#{progObjetos1, matematica1})
+    const progObjetos2 = new Materia(carrera=programacion, prerrequisitos=#{progObjetos1, matematica1}, maximoEstudiantes = 3)
     const progObjetos3 = new Materia(carrera=programacion, prerrequisitos=#{progObjetos2, basesDeDatos})
     const elementosDeProgramacion = new Materia(carrera=programacion)
     const basesDeDatos = new Materia(carrera=programacion)
@@ -28,16 +28,17 @@ describe "funcionalidades de la universidad" {
     const trabajoFinal = new Materia(carrera=programacion, prerrequisitos=#{progObjetos1, progObjetos2, progObjetos3, 
     elementosDeProgramacion, basesDeDatos, matematica1, programacionConcurrente})
     const roque = new Estudiante(carrerasCursando = #{programacion, medicina})
-    const luisa = new Estudiante(carrerasCursando = #{programacion, medicina})
-    const romina = new Estudiante(carrerasCursando = #{programacion, medicina})
-    const alicia = new Estudiante(carrerasCursando = #{programacion, medicina})
-    const ana = new Estudiante(carrerasCursando = #{programacion, medicina})
+    const luisa = new Estudiante(carrerasCursando = #{programacion})
+    const romina = new Estudiante(carrerasCursando = #{programacion})
+    const alicia = new Estudiante(carrerasCursando = #{programacion})
+    const ana = new Estudiante(carrerasCursando = #{programacion})
 
     method initialize() {
         medicina.materias(#{quimica, biologia1, biologia2, anatomiaGeneral})
         derecho.materias(#{latin, derechoRomano, historiaDelDerechoArgentino, derechoPenal1, derechoPenal2})
         programacion.materias(#{progObjetos1, progObjetos2, progObjetos3, elementosDeProgramacion, basesDeDatos,
         matematica1, programacionConcurrente, trabajoFinal})
+
         roque.inscribirseA(elementosDeProgramacion)
         roque.registrarMateriaAprobada(elementosDeProgramacion, 7)
         roque.inscribirseA(matematica1)
@@ -50,6 +51,30 @@ describe "funcionalidades de la universidad" {
         roque.registrarMateriaAprobada(quimica, 7)
         roque.inscribirseA(biologia1)
         roque.registrarMateriaAprobada(biologia1, 7)
+
+        luisa.inscribirseA(elementosDeProgramacion)
+        luisa.registrarMateriaAprobada(elementosDeProgramacion, 7)
+        luisa.inscribirseA(progObjetos1)
+        luisa.registrarMateriaAprobada(progObjetos1, 7)
+        luisa.inscribirseA(matematica1)
+        luisa.registrarMateriaAprobada(matematica1, 7)
+
+        romina.inscribirseA(elementosDeProgramacion)
+        romina.registrarMateriaAprobada(elementosDeProgramacion, 5)
+        romina.inscribirseA(progObjetos1)
+        romina.registrarMateriaAprobada(progObjetos1, 5)
+        romina.inscribirseA(matematica1)
+        romina.registrarMateriaAprobada(matematica1, 5)
+
+        alicia.inscribirseA(elementosDeProgramacion)
+        alicia.registrarMateriaAprobada(elementosDeProgramacion, 6)
+        alicia.inscribirseA(progObjetos1)
+        alicia.registrarMateriaAprobada(progObjetos1, 6)
+        alicia.inscribirseA(matematica1)
+        alicia.registrarMateriaAprobada(matematica1, 6)
+
+        ana.inscribirseA(elementosDeProgramacion)
+        ana.registrarMateriaAprobada(elementosDeProgramacion, 7)
     }
    
    test "funcionalidades básicas de roque y registrar aprobaciones" {
@@ -71,7 +96,7 @@ describe "funcionalidades de la universidad" {
     assert.equals(7, roque.materiasAprobadas().size())
    }
 
-   test "inscripciones" {
+   test "inscripciones 1" {
     assert.notThat(roque.puedeInscribirseA(derechoRomano)) //no hay coincidencia con las carreras de roque
     assert.notThat(roque.puedeInscribirseA(progObjetos1)) //ya la tiene aprobada
     assert.notThat(roque.puedeInscribirseA(progObjetos3)) //no cumple los prerrequisitos
@@ -80,6 +105,17 @@ describe "funcionalidades de la universidad" {
     assert.notThat(roque.puedeInscribirseA(progObjetos2)) //ya la está cursando
     roque.registrarMateriaAprobada(progObjetos2, 8)
     assert.that(roque.puedeInscribirseA(progObjetos3))
+    assert.equals(7, roque.materiasAprobadas().size())
    }
+
+   test "inscripciones 2" {
+
+   }
+
+   /*
+* Roque puede inscribirse: en Programación, en Objetos 2 y Programación Concurrente; en Medicina, en Biología 2.
+* Si se inscriben, en este orden, Luisa, Romina, Alicia y Roque en Objetos 2, entonces las tres primeras quedan confirmadas, y Roque queda en lista de espera.
+* Si después se da de baja Romina en Objetos 2, entonces Roque pasa a tener la inscripción confirmada en esa materia.
+   */
 
 }

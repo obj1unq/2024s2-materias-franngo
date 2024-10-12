@@ -77,5 +77,6 @@ object gestorInscripcion {
 
 1. Más información sobre une estudiante: dada una carrera, conocer todas las materias de esa carrera a las que se puede inscribir. Sólo
  vale si el estudiante está cursando esa carrera.  
+    LISTO
 */
 

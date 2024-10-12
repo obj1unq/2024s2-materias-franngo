@@ -80,4 +80,8 @@ class Estudiante {
         gestorInscripcion.darDeBajaEstudianteEn(self, materia)
     }
 
+    method materiasCursablesDeCarrera(carrera) {
+        return carrera.materias().filter({materia => self.puedeInscribirseA(materia)})
+    }
+
 }
