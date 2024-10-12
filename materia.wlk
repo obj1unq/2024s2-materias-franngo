@@ -58,8 +58,9 @@ object correlativas {
 
 object creditos {
 
+    //solo se contabilizan los créditos que otorgan las materias de la misma carrera que la de la materia en cuestión.
     method cumplePrerrequisitosEstudiantePara(estudiante, materia) {
-        return estudiante.totalDeCreditos() >= materia.creditosRequeridos()
+        return estudiante.totalDeCreditosDeCarrera(materia.carrera()) >= materia.creditosRequeridos()
     }
 
 }

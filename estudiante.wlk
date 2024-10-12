@@ -85,8 +85,9 @@ class Estudiante {
         return carrera.materias().filter({materia => self.puedeInscribirseA(materia)})
     }
 
-    method totalDeCreditos() {
-        return materiasAprobadas.sum({instanciaAprobacion => instanciaAprobacion.materia().creditosQueOtorga()})
+    method totalDeCreditosDeCarrera(carrera) {
+        const materiasContabilizables = materiasAprobadas.filter({instanciaAprob => instanciaAprob.materia().carrera()==carrera})
+        return materiasContabilizables.sum({instanciaAprobacion => instanciaAprobacion.materia().creditosQueOtorga()})
     }
 
 }

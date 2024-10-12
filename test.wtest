@@ -6,6 +6,7 @@ import materia.*
 
 describe "funcionalidades de la universidad" {
 
+    //SETTEO DE ESTADO INICIAL:
     const medicina = new Carrera()
     const quimica = new Materia(carrera=medicina)
     const biologia1 = new Materia(carrera=medicina)
@@ -103,12 +104,12 @@ describe "funcionalidades de la universidad" {
    test "inscripciones 1" {
     assert.notThat(roque.puedeInscribirseA(derechoRomano)) //no hay coincidencia con las carreras de roque
     assert.notThat(roque.puedeInscribirseA(progObjetos1)) //ya la tiene aprobada
-    assert.notThat(roque.puedeInscribirseA(progObjetos3)) //no cumple los prerrequisitos
-    assert.that(roque.puedeInscribirseA(progObjetos2))
+    assert.notThat(roque.puedeInscribirseA(progObjetos3)) //no cumple los prerrequisitos (no aprobó las correlativas)
+    assert.that(roque.puedeInscribirseA(progObjetos2)) //tiene aprobadas las correlativas
     roque.inscribirseA(progObjetos2)
     assert.notThat(roque.puedeInscribirseA(progObjetos2)) //ya la está cursando
     roque.registrarMateriaAprobada(progObjetos2, 8)
-    assert.that(roque.puedeInscribirseA(progObjetos3))
+    assert.that(roque.puedeInscribirseA(progObjetos3)) //cumple los prerrequisitos (aprobó las correlativas)
     assert.equals(7, roque.cantMateriasAprobadas())
    }
 
@@ -147,23 +148,24 @@ describe "funcionalidades de la universidad" {
    }
 
    test "inscripciones 4 (tipos de prerrequisitos)" {
-        progObjetos3.tipoPrerrequisitos(porAnho) //requerirá que se tengan aprobadas las del año anterior, o sea, 2do
+        assert.that(ana.puedeInscribirseA(matematica1)) //puede porque no tiene requisitos
+        assert.that(roque.puedeInscribirseA(progObjetos2)) //puede porque cumple con las correlativas
+        progObjetos3.tipoPrerrequisitos(porAnho) //ahora requerirá que se tengan aprobadas las del año anterior, o sea, 2do año
+        assert.notThat(roque.puedeInscribirseA(progObjetos3)) //de 2do año tiene aprobada basesDeDatos pero le falta progObjetos2
+        roque.inscribirseA(progObjetos2)
+        roque.registrarMateriaAprobada(progObjetos2, 6)
+        assert.that(roque.puedeInscribirseA(progObjetos3)) //ahora sí porque tiene aprobadas las 2 de 2do año
+        assert.notThat(roque.puedeInscribirseA(trabajoFinal)) //prerreq de 250 créditos. cada materia son 40, o sea, se requieren 7 materias
+                                                              //aprobadas de la carrera (acá tiene solo 5)
+        roque.inscribirseA(progObjetos3)
+        roque.registrarMateriaAprobada(progObjetos3, 5)
+        roque.inscribirseA(programacionConcurrente)
+        roque.registrarMateriaAprobada(programacionConcurrente, 7)
+        assert.that(roque.puedeInscribirseA(trabajoFinal)) //ahora sí porque tiene 280 créditos (por las 7 aprobadas de la carrera)
    }
 
 /*
     ## Bonus
-### Distintos tipos de requisitos
-Contemplar que no todas las materias ponen a otras materias como requisitos. Otras opciones son:
-   * Una cantidad de créditos: por ejemplo para hacer el Trabajo Final se necesita acumular 250 créditos previamente. Para esto agrear a 
-   cada materia la cantidad de_créditos_ que otorga, que es un número. 
-   * Por año, es decir, haber aprobado todas las materias del año anterior. Por ejemplo, para cursar Objetos 3, que es una materia de 
-   tercer año, es necesario haber aprobado todas las materias del segundo año. Para esto es necesario agregar a cada materia a qué año 
-   pertence.
-   * Nada: Hay materias que no tienen ningún requerimiento, por ejemplo Elementos de Programación es una de las primeras materias y por 
-   lo tanto no tiene ninguna condición especial, cualquiera puede cursarla.
-
-Cada materia tiene sólo uno de estos tipos de requisitos: correlativas, cŕeditos, por año o nada. 
-
 ### Formas de manejar la lista de espera
 Por otro lado, diferentes materias pueden tener diferentes _estrategias para manejar su lista de espera_, a saber:
 - Por orden de llegada: si te querés inscribir y no hay lugar vas a la lista de espera por llegar último
