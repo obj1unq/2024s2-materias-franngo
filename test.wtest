@@ -79,21 +79,23 @@ describe "funcionalidades de la universidad" {
    
    test "funcionalidades básicas de roque y registrar aprobaciones" {
     assert.equals(#{programacion, medicina}, roque.carrerasCursando())
-    assert.equals(6, roque.materiasAprobadas().size())
+    assert.equals(#{quimica, biologia1, biologia2, anatomiaGeneral, progObjetos1, progObjetos2, progObjetos3, elementosDeProgramacion, 
+    basesDeDatos, matematica1, programacionConcurrente, trabajoFinal}, roque.todasLasMateriasDeSusCarreras())
+    assert.equals(6, roque.cantMateriasAprobadas())
     assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 3)}) //no está inscrito 
     assert.throwsException({roque.inscribirseA(basesDeDatos)}) //ya la tiene aprobada
     assert.doesNotThrowException({roque.inscribirseA(progObjetos2)}) 
     assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 3)}) //no es nota aprobatoria
     assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 11)}) //no es nota aprobatoria
     assert.doesNotThrowException({roque.registrarMateriaAprobada(progObjetos2, 4)})
-    assert.equals(7, roque.materiasAprobadas().size())
+    assert.equals(7, roque.cantMateriasAprobadas())
     assert.that(roque.tieneAprobada(progObjetos2))
     assert.equals(6, roque.promedio())
     assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 5)}) //tira error porque ya la aprobó y no la está cursando más
     assert.equals(#{quimica, biologia1, biologia2, anatomiaGeneral, progObjetos1, progObjetos2, progObjetos3, 
                     elementosDeProgramacion, basesDeDatos, matematica1, programacionConcurrente, trabajoFinal},
                     roque.todasLasMateriasDeSusCarreras())
-    assert.equals(7, roque.materiasAprobadas().size())
+    assert.equals(7, roque.cantMateriasAprobadas())
    }
 
    test "inscripciones 1" {
@@ -105,7 +107,7 @@ describe "funcionalidades de la universidad" {
     assert.notThat(roque.puedeInscribirseA(progObjetos2)) //ya la está cursando
     roque.registrarMateriaAprobada(progObjetos2, 8)
     assert.that(roque.puedeInscribirseA(progObjetos3))
-    assert.equals(7, roque.materiasAprobadas().size())
+    assert.equals(7, roque.cantMateriasAprobadas())
    }
 
    test "inscripciones 2 (correlatividades)" {
@@ -137,6 +139,9 @@ describe "funcionalidades de la universidad" {
     assert.equals([], progObjetos2.listaDeEspera())
     assert.that(roque.estaEfectivamenteCursando(progObjetos2))
     assert.notThat(roque.estaEnListaDeEspera(progObjetos2))
+    assert.equals(#{progObjetos2}, roque.materiasEfectivamenteCursando())
+    assert.equals(#{}, roque.materiasEnListaDeEspera())
+    assert.equals(#{programacionConcurrente}, roque.materiasCursablesDeCarrera(programacion))
    }
 
 }

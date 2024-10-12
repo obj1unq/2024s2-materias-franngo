@@ -65,7 +65,7 @@ class Estudiante {
     }
 
     method materiasEfectivamenteCursando() {
-        return self.todasLasMateriasDeSusCarreras().fitler({materia => self.estaEfectivamenteCursando(materia)})
+        return self.todasLasMateriasDeSusCarreras().filter({materia => self.estaEfectivamenteCursando(materia)})
     }
 
     method estaEnListaDeEspera(materia) {
