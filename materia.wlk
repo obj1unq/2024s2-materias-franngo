@@ -24,11 +24,9 @@ class Materia {
 
     method liberarCupoDe(estudiante) {
         alumnosCursando.remove(estudiante)
-        if(alumnosCursando.size()==maximoEstudiantes-1) {
-            if(listaDeEspera.size()>0) {
-                alumnosCursando.add(listaDeEspera.head()) //inscribe efectivamente al que llevaba más tiempo esperando
-                listaDeEspera.remove(listaDeEspera.head()) //lo borra de la lista de espera
-            }
+        if(alumnosCursando.size()==maximoEstudiantes-1 && listaDeEspera.size()>0) {
+            alumnosCursando.add(listaDeEspera.head()) //inscribe efectivamente al que llevaba más tiempo esperando
+            listaDeEspera.remove(listaDeEspera.head()) //lo borra de la lista de espera
         }
     }
 

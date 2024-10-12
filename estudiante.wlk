@@ -42,36 +42,42 @@ class Estudiante {
         return gestorInscripcion.puedeInscribirseA(self, materia)
     }
 
-    method estaCursandoOEnEspera(materia) {
-        //return materiasCursando.any({materiaCurs => materiaCurs==materia})
-        return materia.alumnosCursando().any({alumno => alumno==self})
-        || materia.listaDeEspera().any({alumno => alumno==self})
-    }
-
     method tieneAprobadosRequisitos(materia) {
         return materia.prerrequisitos().all({prerreq => self.tieneAprobada(prerreq)}) //si no hay prerreq, devuelve true
+    }
+
+    method estaCursandoOEnEspera(materia) {
+        return self.estaEfectivamenteCursando(materia) || self.estaEnListaDeEspera(materia)
     }
 
     method inscribirseA(materia) {
         gestorInscripcion.inscribirEstudianteEn(self, materia)
     }
 
-    method validarEstaInscrito(materia) {
-        if(!self.estaCursandoOEnEspera(materia)) {
-            self.error("No se puede registrar la nota porque el estudiante no está cursando esta materia")
+    method validarEstaEfectivamenteInscrito(materia) {
+        if(!self.estaEfectivamenteCursando(materia)) {
+            self.error("No se puede registrar la nota porque el estudiante no está cursando como tal esta materia")
         }
     }
 
-    //HACER: materias cursando y materias en lista de espera
+    method estaEfectivamenteCursando(materia) {
+        return materia.alumnosCursando().any({alumno => alumno==self})
+    }
 
-    /*
-    1. Inscribir un estudiante a una materia, verificando las condiciones de inscripción de la materia. Si no se cumplen las 
-    condiciones, lanzar un error.  
-    Además, cada materia tiene un “cupo”, es decir, una cantidad máxima de estudiantes que se pueden inscribir. Para manejar el exceso
-    en los cupos, las materias tienen una lista de espera, de estudiantes que quisieran cursar pero no tienen lugar 
-    (ver punto 5).
-    O sea, como resultado de la inscripción, el estudiante puede, o bien quedar confirmado, o bien quedar en lista de espera.  
-    No se requiere que el sistema conteste nada con respecto al resultado de la inscripción. 
-    */
+    method materiasEfectivamenteCursando() {
+        return self.todasLasMateriasDeSusCarreras().fitler({materia => self.estaEfectivamenteCursando(materia)})
+    }
+
+    method estaEnListaDeEspera(materia) {
+        return materia.listaDeEspera().any({alumno => alumno==self})
+    }
+
+    method materiasEnListaDeEspera() {
+        return self.todasLasMateriasDeSusCarreras().filter({materia => self.estaEnListaDeEspera(materia)})
+    }
+
+    method darseDeBajaEn(materia) {
+        gestorInscripcion.darDeBajaEstudianteEn(self, materia)
+    }
 
 }

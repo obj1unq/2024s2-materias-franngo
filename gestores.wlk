@@ -11,7 +11,7 @@ object gestorAprobacion {
     //(que la esté cursando implica que existeCoincidenciaCarreraEstudiante() y tieneAprobadosRequisitos() se cumplen, por lo que no
     //se vuelve a validar eso)
     method registrarMateriaAprobada(estudiante, materia, nota) {
-        estudiante.validarEstaInscrito(materia)
+        estudiante.validarEstaEfectivamenteInscrito(materia)
         estudiante.validarNoEstaAprobada(materia) //esto ya se chequea al inscribirse, así que es medio redundante
         self.validarNotaAprobatoria(nota)
         const materiaAprobada = new Aprobacion (estudiante = estudiante, materia = materia, nota = nota)
@@ -36,7 +36,6 @@ object gestorInscripcion {
 
     method inscribirEstudianteEn(estudiante, materia) {
         self.validarPuedeInscribirseA(estudiante, materia)
-        //estudiante.materiasCursando().add(materia)
         materia.inscribirEstudiante(estudiante)
     }
 
@@ -44,6 +43,11 @@ object gestorInscripcion {
         if(!self.puedeInscribirseA(estudiante, materia)) {
             self.error("No se puede realizar la inscripción porque el estudiante no está habilitado a inscribirse a esa materia")
         }
+    }
+
+    method darDeBajaEstudianteEn(estudiante, materia) {
+        estudiante.validarEstaEfectivamenteInscrito(materia)
+        materia.liberarCupoDe(estudiante)
     }
 
 }
@@ -56,16 +60,20 @@ object gestorInscripcion {
     (ver punto 5).
     O sea, como resultado de la inscripción, el estudiante puede, o bien quedar confirmado, o bien quedar en lista de espera.  
     No se requiere que el sistema conteste nada con respecto al resultado de la inscripción. 
+    LISTO
 
     1. Dar de baja un estudiante de una materia. En caso de haber estudiantes en lista de espera, el primer estudiante de la lista debe
      obtener su lugar en la materia.
+     LISTO
 
 1. Brindar resultados de inscripción, específicamente:
     * Los estudiantes inscriptos a una materia dada.
     * Los estudiantes en lista de espera para una materia dada.
+    LISTO
 
 1. Brindar información útil para une estudiante, específicamente: las materias en las que está inscripto, las materias en las que quedó
  en lista de espera. Para esto, usar la lista de todas las materias de las carreras que cursa, resuelto en un punto anterior.
+    LISTO
 
 1. Más información sobre une estudiante: dada una carrera, conocer todas las materias de esa carrera a las que se puede inscribir. Sólo
  vale si el estudiante está cursando esa carrera.  
