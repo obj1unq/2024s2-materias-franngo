@@ -6,7 +6,6 @@ import materia.*
 class Estudiante {
     const property carrerasCursando = #{} //set de instancias de Carrera
     const property materiasAprobadas = #{} //set de instancias de Aprobacion
-    var cantMateriasAprobadas = 0
     const property materiasCursando = #{} //set de instancias de Materia
 
     method registrarMateriaAprobada(materia, nota) {
@@ -23,17 +22,13 @@ class Estudiante {
         return materiasAprobadas.any({instanciaAprobacion => instanciaAprobacion.materia()==materia})
     }
 
-    method sumarCantMateriasAprobadas() {
-        cantMateriasAprobadas += 1
-    }
-
     method cantMateriasAprobadas() {
-        return cantMateriasAprobadas
+        return materiasAprobadas.size()
     }
 
     method promedio() {
         const sumaNotas = materiasAprobadas.sum({instanciaAprobacion => instanciaAprobacion.nota()})
-        return sumaNotas / cantMateriasAprobadas
+        return sumaNotas / self.cantMateriasAprobadas()
     }
 
     method todasLasMateriasDeSusCarreras() {
@@ -50,10 +45,22 @@ class Estudiante {
         return materiasCursando.any({materiaCurs => materiaCurs==materia})
     }
 
-    //RECORDAR AÑADIR LA MATERIA A materiasCursando cuando se inscriba a un estudiante en una materia
-
     method tieneAprobadosRequisitos(materia) {
         return materia.prerrequisitos().all({prerreq => self.tieneAprobada(prerreq)}) //si no hay prerreq, devuelve true
     }
+
+    method inscribirseA(materia) {
+        gestorInscripcion.inscribirEstudianteEn(self, materia)
+    }
+
+    /*
+    1. Inscribir un estudiante a una materia, verificando las condiciones de inscripción de la materia. Si no se cumplen las 
+    condiciones, lanzar un error.  
+    Además, cada materia tiene un “cupo”, es decir, una cantidad máxima de estudiantes que se pueden inscribir. Para manejar el exceso
+    en los cupos, las materias tienen una lista de espera, de estudiantes que quisieran cursar pero no tienen lugar 
+    (ver punto 5).
+    O sea, como resultado de la inscripción, el estudiante puede, o bien quedar confirmado, o bien quedar en lista de espera.  
+    No se requiere que el sistema conteste nada con respecto al resultado de la inscripción. 
+    */
 
 }
