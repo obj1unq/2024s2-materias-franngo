@@ -6,7 +6,7 @@ import materia.*
 class Estudiante {
     const property carrerasCursando = #{} //set de instancias de Carrera
     const property materiasAprobadas = #{} //set de instancias de Aprobacion
-    const property materiasCursando = #{} //set de instancias de Materia
+    //const property materiasCursando = #{} //set de instancias de Materia
 
     method registrarMateriaAprobada(materia, nota) {
         gestorAprobacion.registrarMateriaAprobada(self, materia, nota)
@@ -37,12 +37,15 @@ class Estudiante {
         return materias
     }
 
+    //puede ejecutar inscribirseA(materia) exitosamente
     method puedeInscribirseA(materia) {
         return gestorInscripcion.puedeInscribirseA(self, materia)
     }
 
-    method estaCursando(materia) {
-        return materiasCursando.any({materiaCurs => materiaCurs==materia})
+    method estaCursandoOEnEspera(materia) {
+        //return materiasCursando.any({materiaCurs => materiaCurs==materia})
+        return materia.alumnosCursando().any({alumno => alumno==self})
+        || materia.listaDeEspera().any({alumno => alumno==self})
     }
 
     method tieneAprobadosRequisitos(materia) {
@@ -54,10 +57,12 @@ class Estudiante {
     }
 
     method validarEstaInscrito(materia) {
-        if(!self.estaCursando(materia)) {
+        if(!self.estaCursandoOEnEspera(materia)) {
             self.error("No se puede registrar la nota porque el estudiante no está cursando esta materia")
         }
     }
+
+    //HACER: materias cursando y materias en lista de espera
 
     /*
     1. Inscribir un estudiante a una materia, verificando las condiciones de inscripción de la materia. Si no se cumplen las 

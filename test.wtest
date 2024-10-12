@@ -64,7 +64,7 @@ describe "funcionalidades de la universidad" {
     assert.equals(7, roque.materiasAprobadas().size())
     assert.that(roque.tieneAprobada(progObjetos2))
     assert.equals(6, roque.promedio())
-    assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 5)}) //tira error porque ya la aprobó! (en validacion si la cursa)
+    assert.throwsException({roque.registrarMateriaAprobada(progObjetos2, 5)}) //tira error porque ya la aprobó y no la está cursando más
     assert.equals(#{quimica, biologia1, biologia2, anatomiaGeneral, progObjetos1, progObjetos2, progObjetos3, 
                     elementosDeProgramacion, basesDeDatos, matematica1, programacionConcurrente, trabajoFinal},
                     roque.todasLasMateriasDeSusCarreras())
