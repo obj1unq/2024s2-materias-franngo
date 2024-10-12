@@ -86,7 +86,7 @@ class Estudiante {
     }
 
     method totalDeCreditos() {
-        return materiasAprobadas.sum({materia => materia.creditosQueOtorga()})
+        return materiasAprobadas.sum({instanciaAprobacion => instanciaAprobacion.materia().creditosQueOtorga()})
     }
 
 }

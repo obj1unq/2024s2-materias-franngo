@@ -18,15 +18,17 @@ describe "funcionalidades de la universidad" {
     const derechoPenal1 = new Materia(carrera=derecho)
     const derechoPenal2 = new Materia(carrera=derecho, materiasCorrelativas=#{derechoPenal1})
     const programacion = new Carrera()
-    const progObjetos1 = new Materia(carrera=programacion)
-    const progObjetos2 = new Materia(carrera=programacion, materiasCorrelativas=#{progObjetos1, matematica1}, maximoEstudiantes = 3)
-    const progObjetos3 = new Materia(carrera=programacion, materiasCorrelativas=#{progObjetos2, basesDeDatos})
-    const elementosDeProgramacion = new Materia(carrera=programacion)
-    const basesDeDatos = new Materia(carrera=programacion)
-    const matematica1 = new Materia(carrera=programacion)
-    const programacionConcurrente = new Materia(carrera=programacion, materiasCorrelativas=#{progObjetos1, basesDeDatos})
-    const trabajoFinal = new Materia(carrera=programacion, materiasCorrelativas=#{progObjetos1, progObjetos2, progObjetos3, 
-    elementosDeProgramacion, basesDeDatos, matematica1, programacionConcurrente})
+    const progObjetos1 = new Materia(carrera=programacion, tipoPrerrequisitos = sinPrerrequisitos, anhoMateria = 1)
+    const progObjetos2 = new Materia(carrera=programacion, tipoPrerrequisitos = correlativas, 
+    materiasCorrelativas=#{progObjetos1, matematica1}, maximoEstudiantes = 3, anhoMateria = 2)
+    const progObjetos3 = new Materia(carrera=programacion, tipoPrerrequisitos = correlativas, anhoDeLasDePrerrequisitos = 2,
+    materiasCorrelativas=#{progObjetos2, basesDeDatos}, anhoMateria = 3) //setteo anhoDeLasDePrerreq y materiasCorrelat para alternar dps en tests el tipoPrerrequisitos
+    const elementosDeProgramacion = new Materia(carrera=programacion, tipoPrerrequisitos = sinPrerrequisitos, anhoMateria = 1)
+    const basesDeDatos = new Materia(carrera=programacion, tipoPrerrequisitos = sinPrerrequisitos,  anhoMateria = 2)
+    const matematica1 = new Materia(carrera=programacion, tipoPrerrequisitos = sinPrerrequisitos, anhoMateria = 1)
+    const programacionConcurrente = new Materia(carrera=programacion, tipoPrerrequisitos = correlativas, 
+    materiasCorrelativas=#{progObjetos1, basesDeDatos}, anhoMateria = 3)
+    const trabajoFinal = new Materia(carrera=programacion, tipoPrerrequisitos = creditos, creditosRequeridos = 250, anhoMateria = 4)
     const roque = new Estudiante(carrerasCursando = #{programacion, medicina})
     const luisa = new Estudiante(carrerasCursando = #{programacion})
     const romina = new Estudiante(carrerasCursando = #{programacion})
@@ -144,13 +146,21 @@ describe "funcionalidades de la universidad" {
     assert.equals(#{programacionConcurrente}, roque.materiasCursablesDeCarrera(programacion))
    }
 
-   /*
+   test "inscripciones 4 (tipos de prerrequisitos)" {
+        progObjetos3.tipoPrerrequisitos(porAnho) //requerirá que se tengan aprobadas las del año anterior, o sea, 2do
+   }
+
+/*
     ## Bonus
 ### Distintos tipos de requisitos
 Contemplar que no todas las materias ponen a otras materias como requisitos. Otras opciones son:
-   * Una cantidad de créditos: por ejemplo para hacer el Trabajo Final se necesita acumular 250 créditos previamente. Para esto agrear a cada materia la cantidad de_créditos_ que otorga, que es un número. 
-   * Por año, es decir, haber aprobado todas las materias del año anterior. Por ejemplo, para cursar Objetos 3, que es una materia de tercer año, es necesario haber aprobado todas las materias del segundo año. Para esto es necesario agregar a cada materia a qué año pertence.
-   * Nada: Hay materias que no tienen ningún requerimiento, por ejemplo Elementos de Programación es una de las primeras materias y por lo tanto no tiene ninguna condición especial, cualquiera puede cursarla.
+   * Una cantidad de créditos: por ejemplo para hacer el Trabajo Final se necesita acumular 250 créditos previamente. Para esto agrear a 
+   cada materia la cantidad de_créditos_ que otorga, que es un número. 
+   * Por año, es decir, haber aprobado todas las materias del año anterior. Por ejemplo, para cursar Objetos 3, que es una materia de 
+   tercer año, es necesario haber aprobado todas las materias del segundo año. Para esto es necesario agregar a cada materia a qué año 
+   pertence.
+   * Nada: Hay materias que no tienen ningún requerimiento, por ejemplo Elementos de Programación es una de las primeras materias y por 
+   lo tanto no tiene ninguna condición especial, cualquiera puede cursarla.
 
 Cada materia tiene sólo uno de estos tipos de requisitos: correlativas, cŕeditos, por año o nada. 
 

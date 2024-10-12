@@ -8,7 +8,7 @@ class Materia {
     const property maximoEstudiantes = 2
     const property alumnosCursando = #{}
     const property listaDeEspera = [] //queue (es lista porque nos interesa el orden)
-    const property tipoPrerrequisitos = correlativas
+    var property tipoPrerrequisitos = correlativas
     //atributos relativos a prerrequisitos
     const property materiasCorrelativas = #{}
     const property creditosQueOtorga = 40
