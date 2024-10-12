@@ -6,7 +6,6 @@ import materia.*
 class Estudiante {
     const property carrerasCursando = #{} //set de instancias de Carrera
     const property materiasAprobadas = #{} //set de instancias de Aprobacion
-    //const property materiasCursando = #{} //set de instancias de Materia
 
     method registrarMateriaAprobada(materia, nota) {
         gestorAprobacion.registrarMateriaAprobada(self, materia, nota)
@@ -42,9 +41,11 @@ class Estudiante {
         return gestorInscripcion.puedeInscribirseA(self, materia)
     }
 
-    method tieneAprobadosRequisitos(materia) {
+    /*
+    method cumplePrerrequisitos(materia) {
         return materia.prerrequisitos().all({prerreq => self.tieneAprobada(prerreq)}) //si no hay prerreq, devuelve true
     }
+    */
 
     method estaCursandoOEnEspera(materia) {
         return self.estaEfectivamenteCursando(materia) || self.estaEnListaDeEspera(materia)
@@ -82,6 +83,10 @@ class Estudiante {
 
     method materiasCursablesDeCarrera(carrera) {
         return carrera.materias().filter({materia => self.puedeInscribirseA(materia)})
+    }
+
+    method totalDeCreditos() {
+        return materiasAprobadas.sum({materia => materia.creditosQueOtorga()})
     }
 
 }

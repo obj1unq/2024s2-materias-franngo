@@ -31,7 +31,7 @@ object gestorInscripcion {
 
     method puedeInscribirseA(estudiante, materia) {
         return materia.existeCoincidenciaCarreraEstudiante(estudiante) && !estudiante.tieneAprobada(materia) &&
-               !estudiante.estaCursandoOEnEspera(materia) && estudiante.tieneAprobadosRequisitos(materia)
+               !estudiante.estaCursandoOEnEspera(materia) && materia.cumplePrerrequisitosEstudiante(estudiante)
     }
 
     method inscribirEstudianteEn(estudiante, materia) {
@@ -53,30 +53,20 @@ object gestorInscripcion {
 }
 
 /*
-    1. Inscribir un estudiante a una materia, verificando las condiciones de inscripción de la materia. Si no se cumplen las 
-    condiciones, lanzar un error.  
-    Además, cada materia tiene un “cupo”, es decir, una cantidad máxima de estudiantes que se pueden inscribir. Para manejar el exceso
-    en los cupos, las materias tienen una lista de espera, de estudiantes que quisieran cursar pero no tienen lugar 
-    (ver punto 5).
-    O sea, como resultado de la inscripción, el estudiante puede, o bien quedar confirmado, o bien quedar en lista de espera.  
-    No se requiere que el sistema conteste nada con respecto al resultado de la inscripción. 
-    LISTO
+    ## Bonus
+### Distintos tipos de requisitos
+Contemplar que no todas las materias ponen a otras materias como requisitos. Otras opciones son:
+   * Una cantidad de créditos: por ejemplo para hacer el Trabajo Final se necesita acumular 250 créditos previamente. Para esto agrear a cada materia la cantidad de_créditos_ que otorga, que es un número. 
+   * Por año, es decir, haber aprobado todas las materias del año anterior. Por ejemplo, para cursar Objetos 3, que es una materia de tercer año, es necesario haber aprobado todas las materias del segundo año. Para esto es necesario agregar a cada materia a qué año pertence.
+   * Nada: Hay materias que no tienen ningún requerimiento, por ejemplo Elementos de Programación es una de las primeras materias y por lo tanto no tiene ninguna condición especial, cualquiera puede cursarla.
 
-    1. Dar de baja un estudiante de una materia. En caso de haber estudiantes en lista de espera, el primer estudiante de la lista debe
-     obtener su lugar en la materia.
-     LISTO
+Cada materia tiene sólo uno de estos tipos de requisitos: correlativas, cŕeditos, por año o nada. 
 
-1. Brindar resultados de inscripción, específicamente:
-    * Los estudiantes inscriptos a una materia dada.
-    * Los estudiantes en lista de espera para una materia dada.
-    LISTO
+### Formas de manejar la lista de espera
+Por otro lado, diferentes materias pueden tener diferentes _estrategias para manejar su lista de espera_, a saber:
+- Por orden de llegada: si te querés inscribir y no hay lugar vas a la lista de espera por llegar último
+- Elitista: entran los que tengan mejor promedio.
+- Por grado de avance: Inscribimos al estudiante con más materias aprobadas en la carrera.
 
-1. Brindar información útil para une estudiante, específicamente: las materias en las que está inscripto, las materias en las que quedó
- en lista de espera. Para esto, usar la lista de todas las materias de las carreras que cursa, resuelto en un punto anterior.
-    LISTO
-
-1. Más información sobre une estudiante: dada una carrera, conocer todas las materias de esa carrera a las que se puede inscribir. Sólo
- vale si el estudiante está cursando esa carrera.  
-    LISTO
 */
 
