@@ -118,13 +118,3 @@ object porGradoDeAvance {
     }
 
 }
-
-/*
-    ## Bonus
-### Formas de manejar la lista de espera
-Por otro lado, diferentes materias pueden tener diferentes _estrategias para manejar su lista de espera_, a saber:
-- Por orden de llegada: si te querés inscribir y no hay lugar vas a la lista de espera por llegar último
-- Elitista: entran los que tengan mejor promedio.
-- Por grado de avance: Inscribimos al estudiante con más materias aprobadas en la carrera.
-
-*/

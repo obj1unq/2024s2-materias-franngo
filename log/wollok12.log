@@ -2875,3 +2875,10 @@
 {"level":"info","message":"⌛ Building environment","timeElapsed":233,"timestamp":"2024-10-13T01:23:40.593Z"}
 {"level":"info","message":"⌛ Validating test.wtest","timeElapsed":135,"timestamp":"2024-10-13T01:23:40.728Z"}
 {"failures":[],"level":"info","message":"🧪 Test runner executed on /home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","result":{"failed":0,"ok":1},"timeElapsed":1090,"timestamp":"2024-10-13T01:26:21.848Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":155,"timestamp":"2024-10-13T01:27:48.338Z"}
+{"level":"info","message":"⌛ Validating materia.wlk","timeElapsed":196,"timestamp":"2024-10-13T01:27:48.535Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":222,"timestamp":"2024-10-13T01:27:52.707Z"}
+{"level":"info","message":"⌛ Validating test.wtest","timeElapsed":137,"timestamp":"2024-10-13T01:27:52.844Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":259,"timestamp":"2024-10-13T01:27:53.291Z"}
+{"level":"info","message":"⌛ Validating test.wtest","timeElapsed":124,"timestamp":"2024-10-13T01:27:53.475Z"}
+{"failures":[],"level":"info","message":"🧪 Test runner executed on /home/fran/Documents/archivos-facu/2doCuatri2024/prog-con-objetosI/clase-10-herencia/2024s2-materias-franngo","result":{"failed":0,"ok":7},"timeElapsed":2364,"timestamp":"2024-10-13T01:28:00.271Z"}
