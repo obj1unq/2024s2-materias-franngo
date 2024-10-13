@@ -77,7 +77,7 @@ describe "funcionalidades de la universidad" {
         alicia.registrarMateriaAprobada(matematica1, 6)
 
         ana.inscribirseA(elementosDeProgramacion)
-        ana.registrarMateriaAprobada(elementosDeProgramacion, 7)
+        ana.registrarMateriaAprobada(elementosDeProgramacion, 5)
     }
    
    test "funcionalidades básicas de roque y registrar aprobaciones" {
@@ -162,6 +162,44 @@ describe "funcionalidades de la universidad" {
         roque.inscribirseA(programacionConcurrente)
         roque.registrarMateriaAprobada(programacionConcurrente, 7)
         assert.that(roque.puedeInscribirseA(trabajoFinal)) //ahora sí porque tiene 280 créditos (por las 7 aprobadas de la carrera)
+   }
+
+   test "inscripciones 5 (lista de espera elitista)" {
+        progObjetos2.tipoListaDeEspera(elitista)
+        luisa.inscribirseA(progObjetos2)
+        romina.inscribirseA(progObjetos2)
+        alicia.inscribirseA(progObjetos2)
+        ana.inscribirseA(progObjetos1)
+        ana.registrarMateriaAprobada(progObjetos1, 4)
+        ana.inscribirseA(matematica1)
+        ana.registrarMateriaAprobada(matematica1, 4) //ya puede cursar progObjetos2 (cumple correlativas)
+        ana.inscribirseA(progObjetos2)
+        roque.inscribirseA(progObjetos2)
+        assert.equals(2, progObjetos2.listaDeEspera().size())
+        luisa.darseDeBajaEn(progObjetos2)
+        assert.equals(1, progObjetos2.listaDeEspera().size()) //entra alguien luisa que se dio de baja
+        assert.that(roque.promedio() > ana.promedio())
+        assert.that(roque.estaEfectivamenteCursando(progObjetos2)) //le dio el cupo a roque por tener mayor promedio que ana
+        assert.notThat(ana.estaEfectivamenteCursando(progObjetos2))
+   }
+
+   test "inscripciones 6 (lista de espera por grado de avance)" {
+        progObjetos2.tipoListaDeEspera(porGradoDeAvance)
+        luisa.inscribirseA(progObjetos2)
+        romina.inscribirseA(progObjetos2)
+        alicia.inscribirseA(progObjetos2)
+        ana.inscribirseA(progObjetos1)
+        ana.registrarMateriaAprobada(progObjetos1, 4)
+        ana.inscribirseA(matematica1)
+        ana.registrarMateriaAprobada(matematica1, 4) //ya puede cursar progObjetos2 (cumple correlativas)
+        ana.inscribirseA(progObjetos2)
+        roque.inscribirseA(progObjetos2)
+        assert.equals(2, progObjetos2.listaDeEspera().size())
+        luisa.darseDeBajaEn(progObjetos2)
+        assert.equals(1, progObjetos2.listaDeEspera().size()) //entra alguien luisa que se dio de baja
+        assert.that(roque.materiasAprobadasDeCarrera(programacion).size() > ana.materiasAprobadasDeCarrera(programacion).size())
+        assert.that(roque.estaEfectivamenteCursando(progObjetos2)) //le dio el cupo a roque por tener mayor grado de avance que ana
+        assert.notThat(ana.estaEfectivamenteCursando(progObjetos2))
    }
 
 /*
