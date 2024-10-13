@@ -15,6 +15,7 @@ class Materia {
     const property creditosRequeridos = 200
     const property anhoMateria = 2
     const property anhoDeLasDePrerrequisitos = 1
+    var property tipoListaDeEspera = porOrdenDeLlegada
 
     method existeCoincidenciaCarreraEstudiante(estudiante) {
         return estudiante.carrerasCursando().any({carreraEst => carreraEst==carrera})
@@ -27,13 +28,12 @@ class Materia {
             listaDeEspera.add(estudiante)
         }
     }
+    //cambiaría solo el como organizamos a los que se mandan a la lista de espera. tendría que quedar adelante el de mayor prioridad!
+    //así va a seguir funcionando todo lo otro como liberarCupoDe()
 
     method liberarCupoDe(estudiante) {
         alumnosCursando.remove(estudiante)
-        if(alumnosCursando.size()==maximoEstudiantes-1 && listaDeEspera.size()>0) {
-            alumnosCursando.add(listaDeEspera.head()) //inscribe efectivamente al que llevaba más tiempo esperando
-            listaDeEspera.remove(listaDeEspera.head()) //lo borra de la lista de espera
-        }
+        tipoListaDeEspera.otorgarCupoSiCorrespondeEn(self)
     }
 
     method cumplePrerrequisitosEstudiante(estudiante) {
@@ -80,3 +80,51 @@ object sinPrerrequisitos {
     }
 
 }
+
+//tipos de lista de espera
+
+object porOrdenDeLlegada {
+
+    method otorgarCupoSiCorrespondeEn(materia) {
+        if(materia.alumnosCursando().size()==materia.maximoEstudiantes()-1 && materia.listaDeEspera().size()>0) {
+            materia.alumnosCursando().add(materia.listaDeEspera().head()) //inscribe efectivamente al que llevaba más tiempo esperando
+            materia.listaDeEspera().remove(materia.listaDeEspera().head()) //lo borra de la lista de espera
+        }
+    }
+
+}
+
+object elitista {
+
+    method otorgarCupoSiCorrespondeEn(materia) {
+        if(materia.alumnosCursando().size()==materia.maximoEstudiantes()-1 && materia.listaDeEspera().size()>0) {
+            const alumnoPrioritario = materia.listaDeEspera().max({alumno => alumno.promedio()}) 
+            materia.alumnosCursando().add(alumnoPrioritario) //inscribe efectivamente al de mayor promedio
+            materia.listaDeEspera().remove(alumnoPrioritario) //lo borra de la lista de espera
+        }
+        
+    }
+
+}
+
+object porGradoDeAvance {
+
+    method otorgarCupoSiCorrespondeEn(materia) {
+        if(materia.alumnosCursando().size()==materia.maximoEstudiantes()-1 && materia.listaDeEspera().size()>0) {
+            const alumnoPrioritario = materia.listaDeEspera().max({alumno => alumno.materiasAprobadasDeCarrera(materia.carrera()).size()}) 
+            materia.alumnosCursando().add(alumnoPrioritario) //inscribe efectivamente al que tiene más materias de la carrera aprobadas
+            materia.listaDeEspera().remove(alumnoPrioritario) //lo borra de la lista de espera
+        }
+    }
+
+}
+
+/*
+    ## Bonus
+### Formas de manejar la lista de espera
+Por otro lado, diferentes materias pueden tener diferentes _estrategias para manejar su lista de espera_, a saber:
+- Por orden de llegada: si te querés inscribir y no hay lugar vas a la lista de espera por llegar último
+- Elitista: entran los que tengan mejor promedio.
+- Por grado de avance: Inscribimos al estudiante con más materias aprobadas en la carrera.
+
+*/

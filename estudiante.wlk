@@ -41,12 +41,6 @@ class Estudiante {
         return gestorInscripcion.puedeInscribirseA(self, materia)
     }
 
-    /*
-    method cumplePrerrequisitos(materia) {
-        return materia.prerrequisitos().all({prerreq => self.tieneAprobada(prerreq)}) //si no hay prerreq, devuelve true
-    }
-    */
-
     method estaCursandoOEnEspera(materia) {
         return self.estaEfectivamenteCursando(materia) || self.estaEnListaDeEspera(materia)
     }
@@ -88,6 +82,10 @@ class Estudiante {
     method totalDeCreditosDeCarrera(carrera) {
         const materiasContabilizables = materiasAprobadas.filter({instanciaAprob => instanciaAprob.materia().carrera()==carrera})
         return materiasContabilizables.sum({instanciaAprobacion => instanciaAprobacion.materia().creditosQueOtorga()})
+    }
+
+    method materiasAprobadasDeCarrera(carrera) {
+        return materiasAprobadas.filter({instanciaAprob => instanciaAprob.materia().carrera()==carrera})
     }
 
 }
